@@ -58,7 +58,3 @@ tree.txt
 # system ignore
 .DS_Store
 *.class
-
-
-
-entry-server/src/main/resources/application-dev.yml
