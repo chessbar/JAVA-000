@@ -1,0 +1,64 @@
+# maven ignore
+target/
+utput/
+# *.jar
+*.war
+*.zip
+*.tar
+*.tar.gz
+tree.txt
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+# system ignore
+.DS_Storei# maven ignore
+target/
+output/
+# *.jar
+*.war
+*.zip
+*.tar
+*.tar.gz
+tree.txt
+
+# eclipse ignore
+.settings/
+.project
+.classpath
+
+# idea ignore
+.idea/
+*.ipr
+*.iml
+*.iws
+
+# temp ignore
+*.log
+*.cache
+*.diff
+*.patch
+*.tmp
+
+# system ignore
+.DS_Store
+*.class
+
+
+
+entry-server/src/main/resources/application-dev.yml
