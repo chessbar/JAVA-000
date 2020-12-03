@@ -1,5 +1,25 @@
 package com.example.datasource1.modules;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.MutablePropertyValues;
+import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
+import org.springframework.boot.context.properties.bind.Bindable;
+import org.springframework.boot.context.properties.bind.Binder;
+import org.springframework.boot.context.properties.source.ConfigurationPropertyName;
+import org.springframework.boot.context.properties.source.ConfigurationPropertyNameAliases;
+import org.springframework.boot.context.properties.source.ConfigurationPropertySource;
+import org.springframework.boot.context.properties.source.MapConfigurationPropertySource;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.context.annotation.ImportBeanDefinitionRegistrar;
+import org.springframework.core.env.Environment;
+import org.springframework.core.type.AnnotationMetadata;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar, EnvironmentAware {
 
     private static final Logger logger = LoggerFactory.getLogger(DynamicDataSourceRegister.class);
@@ -25,7 +45,7 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
     /**
      * 存储我们注册的数据源
      */
-    private Map<String, DataSource> customDataSources = new HashMap<String, DataSource>();
+    private Map<String, DataSource> customDataSources = new HashMap<>();
 
     /**
      * 参数绑定工具 springboot2.0新推出
@@ -91,13 +111,7 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
     private Class<? extends DataSource> getDataSourceType(String typeStr) {
         Class<? extends DataSource> type;
         try {
-            if (StringUtils.hasLength(typeStr)) {
-                // 字符串不为空则通过反射获取class对象
-                type = (Class<? extends DataSource>) Class.forName(typeStr);
-            } else {
-                // 默认为hikariCP数据源，与springboot默认数据源保持一致
-                type = HikariDataSource.class;
-            }
+            type = (Class<? extends DataSource>) Class.forName(typeStr);
             return type;
         } catch (Exception e) {
             throw new IllegalArgumentException("can not resolve class with type: " + typeStr); //无法通过反射获取class对象的情况则抛出异常，该情况一般是写错了，所以此次抛出一个runtimeexception
